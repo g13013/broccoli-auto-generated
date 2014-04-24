@@ -94,11 +94,6 @@ AutoGenerate.prototype.write = function (readTree, destDir) {
   });
 };
 
-AutoGenerate.prototype.defaults = {
-  gitRev: true,
-  currentVersion: true
-};
-
 function merge(obj1, obj2) {
   var key;
   obj1 = obj1 || {};
