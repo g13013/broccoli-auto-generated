@@ -1,5 +1,5 @@
 # broccoli-auto-generated
-A plugin for auto generating files from templates files or the `template` option. Templates should contain mustache placeholders,
+A plugin for auto generating files from templates files or the `template` option. Templates should contain mustache placeholders, and
 the template processor is intentionally very simple and logicless, if you want more sophisticated template processing, your can set the `processor` option.
 
 Note: It still in beta until version 0.1, use at your own risk.
@@ -24,6 +24,7 @@ If the `file` option is specified, the `inputTree` will be ignored and can be nu
 
 ```javascript
 var options = {
+  noDefaults: false,//if true package.json and git info will not be read
   //single file from template
   file: '', // file to output, inputTree will be ignored
   template: '', //Template to process, use this option with the file option
@@ -32,25 +33,27 @@ var options = {
   files: [], // files glob filters, default to '["*"]'
 
   //other options
+
   srcDir: '', //directory inside the inputTree
   destDir: '', //directory where to output files
-
-  // Values is a hash containing values to be applied to template files or `template` option,
-  // a value can be a function that expects one argument which is the values hash
+  // values is a hash of values to be applied to template files or the
+  // `template` option, a value can be a function that expects the values hash as argument.
   values: {
     value1: 'any value',
-    value2: function (values)  {
+    value2: function (values) {
       return values.value1;
     }
   }
-
-  licenseFile: 'path_to_license_file' // location of license file, relative to process.cwd, the content will be available to use in values.license
-  processor: function (template, values) {} //a custom template processor that will receive two arguments (template and values hash)
+  // location of license file, relative to process.cwd,
+  // the content will be available to use in values.license
+  licenseFile: 'path_to_license_file'
+  // a custom template processor that will receive two arguments (template, values)
+  processor: function (template, values) {}
 }
 ```
 
 #### Default values
-Unless you define `noDefaults` to `true`, `broccoli-auto-generated` reads by default the `package.json` file if found,
+Unless `noDefaults` is set to `true`, `broccoli-auto-generated` reads by default the `package.json` file if found,
 and some git info of the current project if the `.git` folder or file is found.
 
 ######List:
@@ -72,12 +75,14 @@ var generate = require('broccoli-auto-generated');
 //process "generator/*" files with default values
 var tree1 = generate('generator');
 
-var tree2 = generate('generator', { //process "generator" folder files with values license content and default values
-    values: {myVar: 'A value'}
-    licenseFile: 'license.md'
-  });
+//process "generator" folder files with values, license content and default values
+var tree2 = generate('generator', {
+      values: {myVar: 'A value'}
+      licenseFile: 'license.md'
+    });
 
-var tree3 = generate(null, { //Output "path/to/version.js" file with content from template with value of version from  `package.json`
+//Output "path/to/version.js" file with content from template with value of version from  `package.json`
+var tree3 = generate(null, {
       file: 'path/to/version.js',
       template: 'export default VERSION = "{{packageVersion}}"'
     });
