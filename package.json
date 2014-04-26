@@ -1,6 +1,6 @@
 {
   "name": "broccoli-auto-generated",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Generate files from templates",
   "main": "index.js",
   "license": "MIT",
