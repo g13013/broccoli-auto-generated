@@ -45,7 +45,7 @@ function AutoGenerate(inputTree, options) {
   }
 
   this.options = options;
-
+  this.cache = {};
   //template processor
   this.process = this.options.processor || processor;
 }
@@ -60,10 +60,13 @@ AutoGenerate.prototype.write = function (readTree, destDir) {
   var file = options.file;
   var values = this.values;
 
-  //if file is defined within options we process content and output file to destDir
+  // If file is defined within options we process content and output file to destDir
   if (file) {
-    content = this.process(template, values);
-    writeFile(destDir + '/' + file, content);
+    if (!this.cache[file]) {
+      content = this.process(template, values);
+      writeFile(destDir + '/' + file, content);
+    }
+    this.cache[file] = true; //write only once
     return destDir;
   }
 
