@@ -1,11 +1,10 @@
 'use strict';
 var testObject = require('./mock_setup.js')();
 var testHelpers = require('./helpers');
-var generateFiles = require('../');
 
 testObject['Simple tree'] = function (test) {
   var srcDir = 'src_dir';
-  var generator = generateFiles(this.tree, {
+  var generator = this.injectAll().getModule()(this.tree, {
       noDefaults: true,
       destDir: 'sub_dir',
       values: {

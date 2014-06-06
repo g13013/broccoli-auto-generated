@@ -1,9 +1,8 @@
 'use strict';
 var testObject = require('./mock_setup.js')();
-var generateFiles = require('../');
 
 testObject['Single file'] = function (test) {
-  var generator = generateFiles(this.tree, {
+  var generator = this.injectAll().getModule()(this.tree, {
       noDefaults: true,
       file: 'dest_file.js',
       template: '{{prop1}}: {{value1}}\n{{prop2}}: {{value2}}',
