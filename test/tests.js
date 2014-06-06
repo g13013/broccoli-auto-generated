@@ -1,3 +1,4 @@
+'use strict';
 var dirs = {};
 var fs = require('fs');
 var walkSync = require('walk-sync');
@@ -9,7 +10,6 @@ var _walkSync  = require.cache[walkSyncModulePath].exports;
 var _hashStats = helpers.hashStats;
 var _writeFileSync = fs.writeFileSync;
 var _readFileSync = fs.readFileSync;
-var _statSync = fs.statSync;
 var _mkdirpSync = mkdirp.sync;
 
 require.cache[walkSyncModulePath].exports = function (dir) {
@@ -19,6 +19,7 @@ require.cache[walkSyncModulePath].exports = function (dir) {
 var generateFiles = require('../');
 
 module.exports = {
+  dirs: dirs,
   setUp: function (callback) {
     this.tree = {};
     this.writtenFiles = [];
@@ -36,22 +37,23 @@ module.exports = {
     fs.readFileSync = _readFileSync;
     mkdirp.sync = _mkdirpSync;
     helpers.hashStats = _hashStats;
+    require.cache[walkSyncModulePath].exports = _walkSync;
     callback();
   },
   simpleTemplate: function (test) {
     var generator = generateFiles(this.tree, {
-          noDefaults: true,
-          file: 'dest_file.js',
-          template: '{{prop1}}: {{value1}}\n{{prop2}}: {{value2}}',
-          values: {
-            prop1: 'simpleProp',
-            value1: 'simple value',
-            prop2: function () {
-              return 'functionProp';
-            },
-            value2: 'dynamic value'
-          }
-        });
+        noDefaults: true,
+        file: 'dest_file.js',
+        template: '{{prop1}}: {{value1}}\n{{prop2}}: {{value2}}',
+        values: {
+          prop1: 'simpleProp',
+          value1: 'simple value',
+          prop2: function () {
+            return 'functionProp';
+          },
+          value2: 'dynamic value'
+        }
+      });
     var destTree = [{path: 'dest_folder/dest_file.js', content: 'simpleProp: simple value\nfunctionProp: dynamic value'}];
     // We do not submit readTree function as it is not
     // supposed to be used when using with single template file, that's why we use an assert
@@ -62,17 +64,17 @@ module.exports = {
   templateFiles: function (test) {
     var srcDir = 'src_dir';
     var generator = generateFiles(this.tree, {
-          noDefaults: true,
-          destDir: 'sub_dir',
-          values: {
-            prop1: 'simpleProp',
-            value1: 'simple value',
-            prop2: function () {
-              return 'functionProp';
-            },
-            value2: 'dynamic value'
-          }
-        });
+        noDefaults: true,
+        destDir: 'sub_dir',
+        values: {
+          prop1: 'simpleProp',
+          value1: 'simple value',
+          prop2: function () {
+            return 'functionProp';
+          },
+          value2: 'dynamic value'
+        }
+      });
 
     this.tree[srcDir + '/file1'] = {hash: '0', content: '{{prop1}}'};
     this.tree[srcDir + '/file2'] = {hash: '0', content: '{{value1}}'};
