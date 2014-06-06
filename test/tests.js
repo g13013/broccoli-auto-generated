@@ -80,7 +80,6 @@ module.exports = {
     this.tree[srcDir + '/file2'] = {hash: '0', content: '{{value1}}'};
     this.tree[srcDir + '/file3'] = {hash: '0', content: '{{prop2}}'};
     this.tree[srcDir + '/file4'] = {hash: '0', content: '{{value2}}'};
-    dirs[srcDir] = this.tree;
 
     var destTree = [
       {path: 'dest_folder/file1', content: 'simpleProp'},
@@ -90,7 +89,7 @@ module.exports = {
     ];
     // We do not submit readTree function as it is not
     // supposed to be used when using with single template file, that's why we use an assert
-    generator.write(testHelpers.makeReadTree(srcDir) , 'dest_folder');
+    generator.write(testHelpers.makeReadTree(srcDir, this) , 'dest_folder');
     test.deepEqual(this.writtenFiles, destTree, 'Must have wrote files correctly');
     test.done();
   }
