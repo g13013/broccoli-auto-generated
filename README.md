@@ -1,4 +1,4 @@
-# broccoli-auto-generated
+# broccoli-auto-generated [![Build Status](https://travis-ci.org/g13013/broccoli-auto-generated.svg)](https://travis-ci.org/g13013/broccoli-auto-generated)
 A plugin for auto generating files from templates files or the `template` option. Templates should contain mustache placeholders, and
 the template processor is intentionally very simple and logicless, if you want more sophisticated template processing, your can set the `processor` option.
 
