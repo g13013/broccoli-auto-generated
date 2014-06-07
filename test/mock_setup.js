@@ -18,7 +18,7 @@ module.exports = function () {
       };
 
 
-      this.injectAll = function () {
+      this.injectAll = function () {/*jshint camelcase:false*/
         testedModule.__set__({
           walkSync: testHelpers.walkSync.bind(this),
           fs: {
@@ -36,12 +36,12 @@ module.exports = function () {
         return this;
       };
 
-      this.inject = function (obj) {
+      this.inject = function (obj) {/*jshint camelcase:false*/
         testedModule.__set__(obj);
         return this;
       };
 
-      this.getVar = function (varName) {
+      this.getVar = function (varName) {/*jshint camelcase:false*/
         return testedModule.__get__(varName);
       };
 

@@ -13,7 +13,8 @@ testObject['Package info'] = {
       '"description": "some desc"',
       '"license": "MIT"}'
     ];
-
+  
+    /*jshint camelcase:false*/
     pkgInfo.__set__({
       fs: {
         existsSync: function () {
@@ -44,6 +45,7 @@ testObject['Package info'] = {
     test.expect(2);
     var pkgInfo = rewire('../lib/package_info');
 
+    /*jshint camelcase:false*/
     pkgInfo.__set__({
       fs: {
         existsSync: function () {
