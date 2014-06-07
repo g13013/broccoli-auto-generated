@@ -36,6 +36,7 @@
     "broccoli-kitchen-sink-helpers": "^0.2.0",
     "broccoli-static-compiler": "^0.1.4",
     "broccoli-writer": "^0.1.1",
+    "git_info": "^0.1.0",
     "mkdirp": "^0.4.0",
     "walk-sync": "^0.1.2"
   },
