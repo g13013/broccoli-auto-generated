@@ -23,7 +23,7 @@
     }
   ],
   "scripts": {
-    "test": "grunt nodeunit"
+    "test": "grunt"
   },
   "keywords": [
     "broccoli-plugin",
